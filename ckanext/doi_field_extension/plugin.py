@@ -49,12 +49,18 @@ class DoiFieldExtensionPlugin(plugins.SingletonPlugin,toolkit.DefaultDatasetForm
         # registers itself as the default (above).
         return []
     
+
+    def setup_template_variables(self,context, data_dict):
+        log.info("before rendering templates")
+        return
+
+
     def update_config(self, config):
         log.info("configuring the extension")
         # Add this plugin's templates dir to CKAN's extra_template_paths, so
         # that CKAN will use this plugin's custom templates.
         toolkit.add_template_directory(config, 'templates')
-
+    
     # IConfigurer
 
     #def update_config(self, config_):
