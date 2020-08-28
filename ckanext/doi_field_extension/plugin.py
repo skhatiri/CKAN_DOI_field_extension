@@ -51,7 +51,9 @@ class DoiFieldExtensionPlugin(plugins.SingletonPlugin,toolkit.DefaultDatasetForm
     
 
     def setup_template_variables(self,context, data_dict):
+        super(DoiFieldExtensionPlugin, self).setup_template_variables(context,data_dict)
         log.info("before rendering templates")
+        log.info(toolkit.c)
         return
 
 
