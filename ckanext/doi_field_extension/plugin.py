@@ -8,6 +8,20 @@ log = logging.getLogger(__name__)
 class DoiFieldExtensionPlugin(plugins.SingletonPlugin,toolkit.DefaultDatasetForm):
     plugins.implements(plugins.IDatasetForm)
     plugins.implements(plugins.IConfigurer)
+    plugins.implements(plugins.IActions)
+
+    def get_actions(self):
+        """adds the customized tag_autocomplete action to the action chain"""
+        log.info('Overriding tag_autocomplte action')
+        return {'package_create':self.package_create}
+
+
+    @plugins.toolkit.chained_action    
+    def package_create(self, original_action, context, data_dict):
+        log.info("creating package")
+        log.info(data_dict)
+        return original_action(context,data_dict)
+
 
     def create_package_schema(self):
         log.info("updating package schema for create")
