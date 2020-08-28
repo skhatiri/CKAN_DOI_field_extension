@@ -34,8 +34,8 @@ class DoiFieldExtensionPlugin(plugins.SingletonPlugin,toolkit.DefaultDatasetForm
         log.info("updating package schema for show")
         schema = super(DoiFieldExtensionPlugin, self).show_package_schema()
         schema.update({
-            'doi': [toolkit.get_validator('ignore_missing'), 
-                    toolkit.get_converter('convert_to_extras')]
+            'doi': [toolkit.get_converter('convert_from_extras'),
+                    toolkit.get_validator('ignore_missing')]
         })
         return schema
 
