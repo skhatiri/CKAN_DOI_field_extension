@@ -12,7 +12,7 @@ class DoiFieldExtensionPlugin(plugins.SingletonPlugin,toolkit.DefaultDatasetForm
 
     def get_actions(self):
         """adds the customized tag_autocomplete action to the action chain"""
-        log.info('Overriding tag_autocomplte action')
+        log.info('Overriding package_create action')
         return {'package_create':self.package_create}
 
 
