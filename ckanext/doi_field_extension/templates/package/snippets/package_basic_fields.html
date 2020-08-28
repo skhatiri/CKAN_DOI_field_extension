@@ -1,0 +1,5 @@
+{% ckan_extends %}
+
+{% block package_basic_fields_custom %}
+{{ form.input('doi', label=_('DOI'), id='field-doi', placeholder=_('doi'), value=data.doi, error=errors.doi, classes=['control-medium']) }}
+{% endblock %}

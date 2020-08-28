@@ -1,0 +1,10 @@
+{% ckan_extends %}
+
+{% block extras %}
+  {% if pkg_dict.doi %}
+<tr>
+    <th scope="row" class="dataset-label">{{ _("doi") }}</th>
+    <td class="dataset-details">{{ pkg_dict.doi }}</td>
+</tr>
+  {% endif %}
+{% endblock %}
