@@ -12,7 +12,7 @@ class DoiFieldExtensionPlugin(plugins.SingletonPlugin,toolkit.DefaultDatasetForm
     def create_package_schema(self):
         log.info("updating package schema for create")
         # let's grab the default schema in our plugin
-        schema = super(ExampleIDatasetFormPlugin, self).create_package_schema()
+        schema = super(DoiFieldExtensionPlugin, self).create_package_schema()
         # our custom field
         schema.update({
             'doi': [toolkit.get_validator('ignore_missing')]
@@ -21,7 +21,7 @@ class DoiFieldExtensionPlugin(plugins.SingletonPlugin,toolkit.DefaultDatasetForm
 
     def update_package_schema(self):  
         log.info("updating package schema for update")
-        schema = super(ExampleIDatasetFormPlugin, self).update_package_schema()
+        schema = super(DoiFieldExtensionPlugin, self).update_package_schema()
         # our custom field
         schema.update({
             'doi': [toolkit.get_validator('ignore_missing')]
@@ -30,7 +30,7 @@ class DoiFieldExtensionPlugin(plugins.SingletonPlugin,toolkit.DefaultDatasetForm
 
     def show_package_schema(self):
         log.info("updating package schema for show")
-        schema = super(ExampleIDatasetFormPlugin, self).show_package_schema()
+        schema = super(DoiFieldExtensionPlugin, self).show_package_schema()
         schema.update({
             'doi': [toolkit.get_validator('ignore_missing')]
         })
