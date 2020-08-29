@@ -1,6 +1,8 @@
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
 import logging
+import re
+
 
 log = logging.getLogger(__name__)
 
@@ -8,6 +10,8 @@ log = logging.getLogger(__name__)
 class DoiFieldExtensionPlugin(plugins.SingletonPlugin,toolkit.DefaultDatasetForm):
     plugins.implements(plugins.IDatasetForm)
     plugins.implements(plugins.IConfigurer)
+
+    DOI_REGEX = r'^[a-zA-Z]{4}_\d{3}_[a-zA-Z]{4}$'
 
 
     def create_package_schema(self):
@@ -17,6 +21,7 @@ class DoiFieldExtensionPlugin(plugins.SingletonPlugin,toolkit.DefaultDatasetForm
         # our custom field
         schema.update({
             'doi': [toolkit.get_validator('ignore_missing'), 
+                    self.Doi_validate,
                     toolkit.get_converter('convert_to_extras')]
         })
         return schema
@@ -26,7 +31,8 @@ class DoiFieldExtensionPlugin(plugins.SingletonPlugin,toolkit.DefaultDatasetForm
         schema = super(DoiFieldExtensionPlugin, self).update_package_schema()
         # our custom field
         schema.update({
-            'doi': [toolkit.get_validator('ignore_missing'), 
+            'doi': [toolkit.get_validator('ignore_missing'),  
+                    self.Doi_validate,
                     toolkit.get_converter('convert_to_extras')]
         })
         return schema
@@ -35,7 +41,8 @@ class DoiFieldExtensionPlugin(plugins.SingletonPlugin,toolkit.DefaultDatasetForm
         log.info("updating package schema for show")
         schema = super(DoiFieldExtensionPlugin, self).show_package_schema()
         schema.update({
-            'doi': [toolkit.get_converter('convert_from_extras'),
+            'doi': [toolkit.get_converter('convert_from_extras'), 
+                    self.Doi_validate,
                     toolkit.get_validator('ignore_missing')]
         })
         return schema
@@ -56,4 +63,15 @@ class DoiFieldExtensionPlugin(plugins.SingletonPlugin,toolkit.DefaultDatasetForm
         # Add this plugin's templates dir to CKAN's extra_template_paths, so
         # that CKAN will use this plugin's custom templates.
         toolkit.add_template_directory(config, 'templates')
+
+    def Doi_validate(self,value):
+        #ignore missing
+        if not value:
+            return value
+
+        if re.match(DOI_REGEX,value):
+            return value
+        else:
+            raise toolkit.Invalid("DOI does not match the convension : 'cccc_ddd_cccc'")
+
    
