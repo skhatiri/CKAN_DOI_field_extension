@@ -1,5 +1,5 @@
 {% ckan_extends %}
 
 {% block package_basic_fields_custom %}
-{{ form.input('doi', label=_('DOI'), id='field-doi', placeholder=_('doi'), value=data.doi, error=errors.doi, classes=['control-medium'], **{'title':'DOI convension: "4 alphabet characters_4 digits_4 alphabet characters"'}) }}
+{{ form.input('doi', label=_('DOI'), id='field-doi', placeholder=_('convension:"4 alphabet characters_4 digits_4 alphabet characters"'), value=data.doi, error=errors.doi, classes=['control-medium']) }}
 {% endblock %}
