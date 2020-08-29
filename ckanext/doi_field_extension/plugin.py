@@ -6,12 +6,13 @@ import re
 
 log = logging.getLogger(__name__)
 
+DOI_REGEX = r'^[a-zA-Z]{4}_\d{3}_[a-zA-Z]{4}$'
+
 
 class DoiFieldExtensionPlugin(plugins.SingletonPlugin,toolkit.DefaultDatasetForm):
     plugins.implements(plugins.IDatasetForm)
     plugins.implements(plugins.IConfigurer)
 
-    DOI_REGEX = r'^[a-zA-Z]{4}_\d{3}_[a-zA-Z]{4}$'
 
 
     def create_package_schema(self):
