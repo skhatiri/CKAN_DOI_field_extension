@@ -10,13 +10,13 @@ DOI_REGEX = r'^[a-zA-Z]{4}_\d{3}_[a-zA-Z]{4}$'
 
 
 class DoiFieldExtensionPlugin(plugins.SingletonPlugin,toolkit.DefaultDatasetForm):
+    """A ckan plugin extension to add DOI filed to datasets"""
     plugins.implements(plugins.IDatasetForm)
     plugins.implements(plugins.IConfigurer)
 
 
 
     def create_package_schema(self):
-        log.info("updating package schema for create")
         # let's grab the default schema in our plugin
         schema = super(DoiFieldExtensionPlugin, self).create_package_schema()
         # our custom field
@@ -28,7 +28,6 @@ class DoiFieldExtensionPlugin(plugins.SingletonPlugin,toolkit.DefaultDatasetForm
         return schema
 
     def update_package_schema(self):  
-        log.info("updating package schema for update")
         schema = super(DoiFieldExtensionPlugin, self).update_package_schema()
         # our custom field
         schema.update({
@@ -39,7 +38,6 @@ class DoiFieldExtensionPlugin(plugins.SingletonPlugin,toolkit.DefaultDatasetForm
         return schema
 
     def show_package_schema(self):
-        log.info("updating package schema for show")
         schema = super(DoiFieldExtensionPlugin, self).show_package_schema()
         schema.update({
             'doi': [toolkit.get_converter('convert_from_extras'), 
