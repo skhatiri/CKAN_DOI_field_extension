@@ -8,19 +8,6 @@ log = logging.getLogger(__name__)
 class DoiFieldExtensionPlugin(plugins.SingletonPlugin,toolkit.DefaultDatasetForm):
     plugins.implements(plugins.IDatasetForm)
     plugins.implements(plugins.IConfigurer)
-    plugins.implements(plugins.IActions)
-
-    def get_actions(self):
-        """adds the customized tag_autocomplete action to the action chain"""
-        log.info('Overriding package_create action')
-        return {'package_create':self.package_create}
-
-
-    @plugins.toolkit.chained_action    
-    def package_create(self, original_action, context, data_dict):
-        log.info("creating package")
-        log.info(data_dict)
-        return original_action(context,data_dict)
 
 
     def create_package_schema(self):
@@ -64,23 +51,9 @@ class DoiFieldExtensionPlugin(plugins.SingletonPlugin,toolkit.DefaultDatasetForm
         return []
     
 
-    def setup_template_variables(self,context, data_dict):
-        super(DoiFieldExtensionPlugin, self).setup_template_variables(context,data_dict)
-        log.info("before rendering templates")
-        log.info(toolkit.c)
-        return
-
-
     def update_config(self, config):
         log.info("configuring the extension")
         # Add this plugin's templates dir to CKAN's extra_template_paths, so
         # that CKAN will use this plugin's custom templates.
         toolkit.add_template_directory(config, 'templates')
-    
-    # IConfigurer
-
-    #def update_config(self, config_):
-    #    toolkit.add_template_directory(config_, 'templates')
-    #    toolkit.add_public_directory(config_, 'public')
-    #    toolkit.add_resource('fanstatic',
-    #        'doi_field_extension')
+   
